@@ -1,0 +1,66 @@
+ALGORITHM AnalysePhrase
+// Cet algorithme lit une phrase se terminant par un point,
+// puis compte :
+// - le nombre de caracteres,
+// - le nombre de mots,
+// - le nombre de voyelles (a, e, i, o, u, y).
+
+VAR
+   caractere : CHAR
+   longueur, nbMots, nbVoyelles, i : INTEGER
+   dansMot : BOOLEAN
+   phrase : STRING
+
+BEGIN
+   longueur = 0
+   nbMots =0
+   nbVoyelles = 0
+   dansMot = FAUX
+
+   WRITE("Entrez une phrase qui se termine par un point :")
+   READ(phrase)
+
+   IF phrase[LEN(phrase)] =! '.' THEN
+      WRITE("Erreur : la phrase doit se terminer par un point.")
+   ELSE
+      FOR i FROM 1 TO LEN(phrase) DO
+         caractere = phrase[i]      
+         longueur = longueur + 1
+
+         // Détecte le debut d'un mot
+         IF caractere != ' ' AND caractere != '.' THEN
+            IF dansMot = FAUX THEN
+               nbMots = nbMots + 1
+               dansMot = VRAI
+            END_IF
+         ELSE
+            dansMot = FAUX
+         END_IF
+
+         // Verifie si c’est une voyelle (maj ou min)
+         SWITCH caractere DO
+            CASE 'a':
+            CASE 'e':
+            CASE 'i':
+            CASE 'o':
+            CASE 'u':
+            CASE 'y':
+            CASE 'A':
+            CASE 'E':
+            CASE 'I':
+            CASE 'O':
+            CASE 'U':
+            CASE 'Y':
+               nbVoyelles = nbVoyelles + 1
+               BREAK
+            DEFAULT:
+               // Ne rien faire
+         END_SWITCH
+      END_FOR
+
+      // Affichage des résultats
+      WRITE("Longueur de la phrase : ", longueur)
+      WRITE("Nombre de mots : ", nbMots)
+      WRITE("Nombre de voyelles : ", nbVoyelles)
+   END_IF
+END
